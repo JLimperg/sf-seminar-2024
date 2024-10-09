@@ -31,3 +31,6 @@ Compute (next_weekday friday).
 and hit Ctrl-Alt-Rightarrow (or click on the "Run to Cursor" icon in the
 toolbar). The part of the file up to your cursor should be highlighted in green
 and Coq should print the result of the `Compute` command (`= monday : day`).
+
+Later chapters in each volume may require that the code of earlier chapters is
+compiled. To do this, run `make` in each of the three volume directories.
