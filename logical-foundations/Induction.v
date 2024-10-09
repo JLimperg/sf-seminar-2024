@@ -33,10 +33,10 @@ From LF Require Export Basics.
      - In Proof General or CoqIDE, the compilation should happen
        automatically when you submit the [Require] line above to PG.
 
-     - For VSCode users, open the terminal pane at the bottom 
-       and then use the command line instructions below. 
-       (If you downloaded the project setup .tgz file, just doing `make`
-       should build all the code.)
+     - For VSCode users, open the terminal pane at the bottom and then
+       use the command line instructions below.  (If you downloaded
+       the project setup .tgz file, just doing `make` should build all
+       the code.)
 
      - If you want to compile from the command line, generate a
        [Makefile] using the [coq_makefile] utility, which comes
@@ -68,10 +68,26 @@ From LF Require Export Basics.
        compile them in the right order, so [make] should generally be
        preferred over explicit [coqc].
 
-    If you have trouble (e.g., if you get complaints about missing
-    identifiers later in the file), it may be because the "load path"
-    for Coq is not set up correctly.  The [Print LoadPath.] command
-    may be helpful in sorting out such issues.
+    - As a last (but not terrible) resort, you can simply compile each
+      file manually as you go.  For example, before starting work on
+      the present chapter, you would need to run the following
+      command:
+
+        coqc -Q . LF Basics.v
+
+      Then, once you've finished this chapter, you'd do
+
+        coqc -Q . LF Induction.v
+
+      to get ready to work on the next one.  If you ever remove the
+      .vo files, you'd need to give both commands again (in that
+      order).
+
+    If you have trouble running Coq in this file (e.g., if you get
+    complaints about missing identifiers later in the file), it may be
+    because the "load path" for Coq is not set up correctly.  The
+    [Print LoadPath.] command may be helpful in sorting out such
+    issues.
 
     In particular, if you see a message like
 
@@ -83,10 +99,10 @@ From LF Require Export Basics.
     in a terminal window are getting a different version of Coq than
     commands executed by Proof General or CoqIDE.
 
-    - Another common reason is that the library [Bar] was modified and
-      recompiled without also recompiling [Foo] which depends on it.
-      Recompile [Foo], or everything if too many files are
-      affected.  (Using the third solution above: [make clean; make].)
+    Another common reason is that the library [Bar] was modified and
+    recompiled without also recompiling [Foo] which depends on it.
+    Recompile [Foo], or everything if too many files are
+    affected.  (Using the third solution above: [make clean; make].)
 
     One more tip for CoqIDE users: If you see messages like [Error:
     Unable to locate library Basics], a likely reason is
@@ -141,20 +157,20 @@ Abort.
     inductively defined sets, we often need a more powerful reasoning
     principle: _induction_.
 
-    Recall (from high school, a discrete math course, etc.) the
-    _principle of induction over natural numbers_: If [P(n)] is some
-    proposition involving a natural number [n] and we want to show
-    that [P] holds for all numbers [n], we can reason like this:
+    Recall (from a discrete math course, probably) the _principle of
+    induction over natural numbers_: If [P(n)] is some proposition
+    involving a natural number [n] and we want to show that [P] holds for
+    all numbers [n], we can reason like this:
          - show that [P(O)] holds;
-         - show that, for any [n'], if [P(n')] holds, then so does
-           [P(S n')];
+         - show that, for any [n'], if [P(n')] holds, then so does [P(S
+           n')];
          - conclude that [P(n)] holds for all [n].
 
     In Coq, the steps are the same: we begin with the goal of proving
     [P(n)] for all [n] and break it down (by applying the [induction]
-    tactic) into two separate subgoals: one where we must show [P(O)]
-    and another where we must show [P(n') -> P(S n')].  Here's how
-    this works for the theorem at hand: *)
+    tactic) into two separate subgoals: one where we must show [P(O)] and
+    another where we must show [P(n') -> P(S n')].  Here's how this works
+    for the theorem at hand: *)
 
 Theorem add_0_r : forall n:nat, n + 0 = n.
 Proof.
@@ -262,16 +278,6 @@ Theorem even_S : forall n : nat,
   even (S n) = negb (even n).
 Proof.
   (* FILL IN HERE *) Admitted.
-(** [] *)
-
-(** **** Exercise: 1 star, standard, optional (destruct_induction)
-
-    Briefly explain the difference between the tactics [destruct]
-    and [induction].
-
-(* FILL IN HERE *)
-*)
-
 (** [] *)
 
 (* ################################################################# *)
@@ -762,7 +768,7 @@ Fixpoint normalize (b:bin) : bin
     Hint: Start by trying to prove the main statement, see where you
     get stuck, and see if you can find a lemma -- perhaps requiring
     its own inductive proof -- that will allow the main proof to make
-    progress. We have one lemma for the [B0] case (which also makes 
+    progress. We have one lemma for the [B0] case (which also makes
     use of [double_incr_bin]) and another for the [B1] case. *)
 
 Theorem bin_nat_bin : forall b, nat_to_bin (bin_to_nat b) = normalize b.
@@ -771,4 +777,4 @@ Proof.
 
 (** [] *)
 
-(* 2023-08-23 11:29 *)
+(* 2024-08-25 14:45 *)

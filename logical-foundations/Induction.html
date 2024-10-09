@@ -34,7 +34,7 @@
 
 
 <div class="doc">
-<a id="lab60"></a><h1 class="section">Separate Compilation</h1>
+<a id="lab61"></a><h1 class="section">Separate Compilation</h1>
 
 <div class="paragraph"> </div>
 
@@ -82,10 +82,10 @@ For this <span class="inlinecode"><span class="id" title="keyword">Require</span
 
 
 </li>
-<li> For VSCode users, open the terminal pane at the bottom 
-       and then use the command line instructions below. 
-       (If you downloaded the project setup .tgz file, just doing `make`
-       should build all the code.)
+<li> For VSCode users, open the terminal pane at the bottom and then
+       use the command line instructions below.  (If you downloaded
+       the project setup .tgz file, just doing `make` should build all
+       the code.)
 
 <div class="paragraph"> </div>
 
@@ -119,15 +119,33 @@ For this <span class="inlinecode"><span class="id" title="keyword">Require</span
        compile them in the right order, so <span class="inlinecode"><span class="id" title="var">make</span></span> should generally be
        preferred over explicit <span class="inlinecode"><span class="id" title="var">coqc</span></span>.
 
+<div class="paragraph"> </div>
+
+
+</li>
+<li> As a last (but not terrible) resort, you can simply compile each
+      file manually as you go.  For example, before starting work on
+      the present chapter, you would need to run the following
+      command:
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">coqc</span> -<span class="id" title="var">Q</span> . <span class="id" title="var">LF</span> <span class="id" title="var">Basics.v</span>
+</span>      Then, once you've finished this chapter, you'd do
+<br/>
+<span class="inlinecode">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">coqc</span> -<span class="id" title="var">Q</span> . <span class="id" title="var">LF</span> <span class="id" title="var">Induction.v</span>
+</span>      to get ready to work on the next one.  If you ever remove the
+      .vo files, you'd need to give both commands again (in that
+      order).
+
 </li>
 </ul>
 
 <div class="paragraph"> </div>
 
-    If you have trouble (e.g., if you get complaints about missing
-    identifiers later in the file), it may be because the "load path"
-    for Coq is not set up correctly.  The <span class="inlinecode"><span class="id" title="keyword">Print</span></span> <span class="inlinecode"><span class="id" title="var">LoadPath</span>.</span> command
-    may be helpful in sorting out such issues.
+    If you have trouble running Coq in this file (e.g., if you get
+    complaints about missing identifiers later in the file), it may be
+    because the "load path" for Coq is not set up correctly.  The
+    <span class="inlinecode"><span class="id" title="keyword">Print</span></span> <span class="inlinecode"><span class="id" title="var">LoadPath</span>.</span> command may be helpful in sorting out such
+    issues.
 
 <div class="paragraph"> </div>
 
@@ -142,14 +160,10 @@ For this <span class="inlinecode"><span class="id" title="keyword">Require</span
 
 <div class="paragraph"> </div>
 
-<ul class="doclist">
-<li> Another common reason is that the library <span class="inlinecode"><span class="id" title="var">Bar</span></span> was modified and
-      recompiled without also recompiling <span class="inlinecode"><span class="id" title="var">Foo</span></span> which depends on it.
-      Recompile <span class="inlinecode"><span class="id" title="var">Foo</span></span>, or everything if too many files are
-      affected.  (Using the third solution above: <span class="inlinecode"><span class="id" title="var">make</span></span> <span class="inlinecode"><span class="id" title="var">clean</span>;</span> <span class="inlinecode"><span class="id" title="var">make</span></span>.)
-
-</li>
-</ul>
+    Another common reason is that the library <span class="inlinecode"><span class="id" title="var">Bar</span></span> was modified and
+    recompiled without also recompiling <span class="inlinecode"><span class="id" title="var">Foo</span></span> which depends on it.
+    Recompile <span class="inlinecode"><span class="id" title="var">Foo</span></span>, or everything if too many files are
+    affected.  (Using the third solution above: <span class="inlinecode"><span class="id" title="var">make</span></span> <span class="inlinecode"><span class="id" title="var">clean</span>;</span> <span class="inlinecode"><span class="id" title="var">make</span></span>.)
 
 <div class="paragraph"> </div>
 
@@ -165,7 +179,7 @@ For this <span class="inlinecode"><span class="id" title="keyword">Require</span
 </div>
 
 <div class="doc">
-<a id="lab61"></a><h1 class="section">Proof by Induction</h1>
+<a id="lab62"></a><h1 class="section">Proof by Induction</h1>
 
 <div class="paragraph"> </div>
 
@@ -224,16 +238,16 @@ We could use <span class="inlinecode"><span class="id" title="tactic">destruct</
 
 <div class="paragraph"> </div>
 
-    Recall (from high school, a discrete math course, etc.) the
-    <i>principle of induction over natural numbers</i>: If <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n</span>)</span> is some
-    proposition involving a natural number <span class="inlinecode"><span class="id" title="var">n</span></span> and we want to show
-    that <span class="inlinecode"><span class="id" title="var">P</span></span> holds for all numbers <span class="inlinecode"><span class="id" title="var">n</span></span>, we can reason like this:
+    Recall (from a discrete math course, probably) the <i>principle of
+    induction over natural numbers</i>: If <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n</span>)</span> is some proposition
+    involving a natural number <span class="inlinecode"><span class="id" title="var">n</span></span> and we want to show that <span class="inlinecode"><span class="id" title="var">P</span></span> holds for
+    all numbers <span class="inlinecode"><span class="id" title="var">n</span></span>, we can reason like this:
 <ul class="doclist">
 <li> show that <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">O</span>)</span> holds;
 
 </li>
-<li> show that, for any <span class="inlinecode"><span class="id" title="var">n'</span></span>, if <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n'</span>)</span> holds, then so does
-           <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">n'</span>)</span>;
+<li> show that, for any <span class="inlinecode"><span class="id" title="var">n'</span></span>, if <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n'</span>)</span> holds, then so does <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">S</span></span>
+           <span class="inlinecode"><span class="id" title="var">n'</span>)</span>;
 
 </li>
 <li> conclude that <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n</span>)</span> holds for all <span class="inlinecode"><span class="id" title="var">n</span></span>.
@@ -245,9 +259,9 @@ We could use <span class="inlinecode"><span class="id" title="tactic">destruct</
 
     In Coq, the steps are the same: we begin with the goal of proving
     <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n</span>)</span> for all <span class="inlinecode"><span class="id" title="var">n</span></span> and break it down (by applying the <span class="inlinecode"><span class="id" title="tactic">induction</span></span>
-    tactic) into two separate subgoals: one where we must show <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">O</span>)</span>
-    and another where we must show <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n'</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">n'</span>)</span>.  Here's how
-    this works for the theorem at hand: 
+    tactic) into two separate subgoals: one where we must show <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">O</span>)</span> and
+    another where we must show <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">n'</span>)</span> <span class="inlinecode">→</span> <span class="inlinecode"><span class="id" title="var">P</span>(<span class="id" title="var">S</span></span> <span class="inlinecode"><span class="id" title="var">n'</span>)</span>.  Here's how this works
+    for the theorem at hand: 
 </div>
 <div class="code">
 
@@ -302,7 +316,7 @@ Like <span class="inlinecode"><span class="id" title="tactic">destruct</span></s
     into the context as needed.) 
 <div class="paragraph"> </div>
 
-<a id="lab62"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (basic_induction)</h4>
+<a id="lab63"></a><h4 class="section">Exercise: 2 stars, standard, especially useful (basic_induction)</h4>
  Prove the following using induction. You might need previously
     proven results. 
 </div>
@@ -330,7 +344,7 @@ Like <span class="inlinecode"><span class="id" title="tactic">destruct</span></s
 <div class="doc"> 
 <div class="paragraph"> </div>
 
-<a id="lab63"></a><h4 class="section">Exercise: 2 stars, standard (double_plus)</h4>
+<a id="lab64"></a><h4 class="section">Exercise: 2 stars, standard (double_plus)</h4>
  Consider the following function, which doubles its argument: 
 </div>
 <div class="code">
@@ -356,7 +370,7 @@ Use induction to prove this simple fact about <span class="inlinecode"><span cla
 <div class="doc"> 
 <div class="paragraph"> </div>
 
-<a id="lab64"></a><h4 class="section">Exercise: 2 stars, standard (eqb_refl)</h4>
+<a id="lab65"></a><h4 class="section">Exercise: 2 stars, standard (eqb_refl)</h4>
  The following theorem relates the computational equality <span class="inlinecode">=?</span> on
     <span class="inlinecode"><span class="id" title="var">nat</span></span> with the definitional equality <span class="inlinecode">=</span> on <span class="inlinecode"><span class="id" title="var">bool</span></span>. 
 </div>
@@ -371,7 +385,7 @@ Use induction to prove this simple fact about <span class="inlinecode"><span cla
 <div class="doc"> 
 <div class="paragraph"> </div>
 
-<a id="lab65"></a><h4 class="section">Exercise: 2 stars, standard, optional (even_S)</h4>
+<a id="lab66"></a><h4 class="section">Exercise: 2 stars, standard, optional (even_S)</h4>
  One inconvenient aspect of our definition of <span class="inlinecode"><span class="id" title="var">even</span></span> <span class="inlinecode"><span class="id" title="var">n</span></span> is the
     recursive call on <span class="inlinecode"><span class="id" title="var">n</span></span> <span class="inlinecode">-</span> <span class="inlinecode">2</span>. This makes proofs about <span class="inlinecode"><span class="id" title="var">even</span></span> <span class="inlinecode"><span class="id" title="var">n</span></span>
     harder when done by induction on <span class="inlinecode"><span class="id" title="var">n</span></span>, since we may need an
@@ -388,21 +402,6 @@ Use induction to prove this simple fact about <span class="inlinecode"><span cla
 <font size=-2>&#9744;</font>
 </div>
 
-<div class="doc"> 
-<div class="paragraph"> </div>
-
-<a id="lab66"></a><h4 class="section">Exercise: 1 star, standard, optional (destruct_induction)</h4>
- Briefly explain the difference between the tactics <span class="inlinecode"><span class="id" title="tactic">destruct</span></span>
-    and <span class="inlinecode"><span class="id" title="tactic">induction</span></span>.
-
-<div class="paragraph"> </div>
-
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
-
-<div class="paragraph"> </div>
-
- <font size=-2>&#9744;</font> 
-</div>
 
 <div class="doc">
 <a id="lab67"></a><h1 class="section">Proofs Within Proofs</h1>
@@ -818,7 +817,7 @@ Now prove commutativity of multiplication.  You will probably want
 </div>
 <div class="code">
 
-<span class="id" title="keyword">Inductive</span> <a id="bin" class="idref" href="#bin"><span class="id" title="inductive">bin</span></a> : <span class="id" title="keyword">Type</span> :=<br/>
+<span class="id" title="keyword">Inductive</span> <a id="bin" class="idref" href="#bin"><span class="id" title="definition, inductive"><span id="bin_rect" class="id"><span id="bin_ind" class="id"><span id="bin_rec" class="id"><span id="bin_sind" class="id">bin</span></span></span></span></span></a> : <span class="id" title="keyword">Type</span> :=<br/>
 &nbsp;&nbsp;| <a id="Z" class="idref" href="#Z"><span class="id" title="constructor">Z</span></a><br/>
 &nbsp;&nbsp;| <a id="B<sub>0</sub>" class="idref" href="#B<sub>0</sub>"><span class="id" title="constructor">B<sub>0</sub></span></a> (<a id="n:61" class="idref" href="#n:61"><span class="id" title="binder">n</span></a> : <a class="idref" href="Induction.html#bin:59"><span class="id" title="inductive">bin</span></a>)<br/>
 &nbsp;&nbsp;| <a id="B<sub>1</sub>" class="idref" href="#B<sub>1</sub>"><span class="id" title="constructor">B<sub>1</sub></span></a> (<a id="n:62" class="idref" href="#n:62"><span class="id" title="binder">n</span></a> : <a class="idref" href="Induction.html#bin:59"><span class="id" title="inductive">bin</span></a>)<br/>
@@ -1057,7 +1056,7 @@ Finally, prove the main theorem. The inductive cases could be a
     Hint: Start by trying to prove the main statement, see where you
     get stuck, and see if you can find a lemma -- perhaps requiring
     its own inductive proof -- that will allow the main proof to make
-    progress. We have one lemma for the <span class="inlinecode"><span class="id" title="var">B<sub>0</sub></span></span> case (which also makes 
+    progress. We have one lemma for the <span class="inlinecode"><span class="id" title="var">B<sub>0</sub></span></span> case (which also makes
     use of <span class="inlinecode"><span class="id" title="var">double_incr_bin</span></span>) and another for the <span class="inlinecode"><span class="id" title="var">B<sub>1</sub></span></span> case. 
 </div>
 <div class="code">
@@ -1070,7 +1069,7 @@ Finally, prove the main theorem. The inductive cases could be a
 
 <div class="code">
 
-<span class="comment">(*&nbsp;2023-08-23&nbsp;11:29&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;2024-08-25&nbsp;14:45&nbsp;*)</span><br/>
 </div>
 </div>
 
