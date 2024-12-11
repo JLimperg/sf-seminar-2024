@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - main
+      - ci-test
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Build PDFs
+      run:
+        - ./mk
+        - ./mk-handout
+    - name: Get version
+      id: get_version
+      run: |
+        version=$(env TZ="Europe/Berlin" date +"%Y-%m-%d-%H.%M.%S")
+        echo "version=${version}" >> $GITHUB_OUTPUT
+    - name: Create release
+      uses: ncipollo/release-action@v1.14.0
+      with:
+        tag: ${{steps.get_version.outputs.version}}
+        commit: ${{github.ref}}
+        artifacts: "lecture-slides/writing/build/writing.pdf,lecture-slides/writing/build/writing-handout.pdf,lecture-slides/sabel-formatting-de.pdf,lecture-slides/sabel-formatting-en.pdf"
